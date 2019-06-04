@@ -413,14 +413,14 @@ static int do_entry(const char *_src, const char *_dst, const char *name)
 		if (cptofs) {
 			struct lkl_timespec lkl_ts[] = { atime, mtime };
 
-			ret = lkl_sys_utimensat(-1, dst, lkl_ts, LKL_AT_SYMLINK_NOFOLLOW);
+			ret = lkl_sys_utimensat(LKL_AT_FDCWD, dst, lkl_ts, LKL_AT_SYMLINK_NOFOLLOW);
 		} else {
 			struct timespec ts[] = {
 				{ .tv_sec = atime.tv_sec, .tv_nsec = atime.tv_nsec, },
 				{ .tv_sec = mtime.tv_sec, .tv_nsec = mtime.tv_nsec, },
 			};
 
-			ret = utimensat(-1, dst, ts, AT_SYMLINK_NOFOLLOW);
+			ret = utimensat(AT_FDCWD, dst, ts, AT_SYMLINK_NOFOLLOW);
 		}
 	}
 
